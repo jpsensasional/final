@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Toko Kopi Sensa - Aroma Khas Biji Pilihan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Minuman Kopi Dengan Cita Rasa Yang Khas dan Berkualitas">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', Arial, sans-serif; }
+        body { background: #f7faf8; color: #2c3e50; overflow-x: hidden; }
+
+        /* HEADER */
+        header {
+            background: radial-gradient(circle, #ff8c00, #e65100);
+            padding: 28px 20px;
+            text-align: center;
+            color: #fff;
+        }
+        header h1 { font-size: 34px; font-weight: 700; }
+        header p { opacity: .95; margin-top: 6px; }
+
+        /* HERO */
+        .hero {
+            max-width: 1200px;
+            margin: auto;
+            padding: 60px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+        .hero h2 { font-size: 36px; margin-bottom: 14px; color: #e65100; }
+        .hero p { font-size: 17px; line-height: 1.7; color: #555; }
+        .hero img {
+            width: 100%;
+            border-radius: 22px;
+            box-shadow: 0 15px 35px rgba(0,0,0,.15);
+        }
+
+        /* BUTTON */
+        .btn {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 16px 34px;
+            background: #ff8c00;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 40px;
+            transition: .3s;
+        }
+        .btn:hover { background: #e65100; transform: scale(1.05); }
+
+        /* SECTION PRODUCTS */
+        .section { max-width: 1200px; margin: auto; padding: 20px; }
+        .section-title { text-align: center; font-size: 30px; font-weight: 700; margin: 60px 0 30px; }
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 26px; }
+        
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,.08);
+            transition: 0.4s;
+            border: 2px solid transparent;
+        }
+        .card:hover { 
+            transform: translateY(-10px); 
+            background: radial-gradient(circle, #ffcc00, #ff8c00); 
+            border: 2px solid #e65100; 
+            box-shadow: 0 15px 35px rgba(230, 81, 0, 0.3);
+        }
+        .card img { width: 100%; height: 170px; object-fit: cover; border-radius: 14px; }
+        .card h3 { margin: 14px 0 6px; font-size: 18px; }
+        .price { color: #16a34a; font-weight: 700; }
+        .card:hover h3, .card:hover .price { color: #fff; }
+
+        /* CTA */
+        .cta {
+            background: radial-gradient(circle, #ff8c00, #e65100);
+            margin: 80px 20px;
+            padding: 50px 30px;
+            text-align: center;
+            color: #fff;
+            border-radius: 30px;
+        }
+        .cta h2 { font-size: 32px; margin-bottom: 12px; }
+        .cta p { font-size: 17px; opacity: .95; }
+
+        /* FOOTER */
+        footer { background: #1d2229; color: #fff; text-align: center; padding: 20px; font-size: 13px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Toko Kopi Sensa</h1>
+    <p>Aroma Khas • Rasa Terjamin • Biji Pilihan</p>
+</header>
+
+<section class="hero">
+    <div>
+        <h2 id="dynamic-hero-title">Kopi Berkualitas</h2>
+        <p id="dynamic-hero-desc">
+            Dipetik manual dari tanah pilihan untuk menjamin kematangan sempurna di setiap butirnya. Kami menjaga kemurnian proses demi mengunci aroma asli kopi hingga ke cangkir Anda.
+        </p>
+        <a href="#products" class="btn">PESAN SEKARANG</a>
+    </div>
+    <img src="https://i.ibb.co/v6gys7NN/Ilustrasi-Biji-Kopi-Sensa-Berkualitas.jpg" alt="Biji Kopi Sensa">
+</section>
+
+<section class="section" id="products">
+    <h2 class="section-title">Produk Unggulan</h2>
+    <div class="products">
+        <div class="card">
+            <img src="https://i.ibb.co/ZRs7Mxpr/Espresso.jpg" alt="Espresso">
+            <h3>Espresso</h3>
+            <div class="price">Rp 20.000</div>
+        </div>
+        <div class="card">
+            <img src="https://i.ibb.co/SY2yRp3/Iced-Caramel-Macchiato.jpg" alt="Caramel Macchiato">
+            <h3>Iced Caramel Macchiato</h3>
+            <div class="price">Rp 30.000</div>
+        </div>
+        <div class="card">
+            <img src="https://i.ibb.co/PZnxCWVb/Iced-Latte.jpg" alt="Iced Latte">
+            <h3>Iced Latte</h3>
+            <div class="price">Rp 25.000</div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2 id="dynamic-cta-title">Kenapa Pilih Toko Kopi Sensa?</h2>
+    <p>Kami selalu mengejar kepuasan Anda, karena kenyamanan Anda adalah prioritas kami.</p>
+</section>
+
+<footer>
+    © 2025 Kopi Sensa • All Rights Reserved <br>
+    <small>Privacy Policy | Terms of Service</small>
+</footer>
+
+<script>
+    const heroTitles = [
+        "Simfoni Rasa dalam Secangkir Kopi",
+        "Kemurnian Biji Kopi Pilihan Nusantara",
+        "Sentuhan Aroma yang Menggugah Semangat",
+        "Dedikasi Tinggi untuk Penikmat Kopi Sejati"
+    ];
+
+    const heroDescs = [
+        "Kami percaya bahwa kopi terbaik lahir dari proses yang jujur. Dari petani lokal langsung ke tangan Anda, menjaga setiap tetesnya tetap autentik dan berkarakter.",
+        "Menghadirkan pengalaman ngopi yang berbeda melalui teknik roasting presisi. Temukan keseimbangan antara rasa pahit yang elegan dan aroma yang menenangkan.",
+        "Setiap biji kopi Sensa adalah hasil kurasi mendalam. Kami memastikan standar kualitas tertinggi untuk menemani momen produktif maupun waktu santai Anda.",
+        "Lebih dari sekadar minuman, ini adalah bentuk apresiasi terhadap kekayaan alam. Nikmati profil rasa unik yang hanya bisa ditemukan dalam racikan istimewa kami."
+    ];
+
+    const ctaTitles = [
+        "Mulailah Hari dengan Kopi Sensa",
+        "Temukan Cita Rasa Favorit Anda",
+        "Bergabung dalam Komunitas Pecinta Kopi",
+        "Kualitas Tanpa Kompromi, Rasa Tak Terganti"
+    ];
+
+    // Eksekusi Pengacakan saat halaman dimuat
+    window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('dynamic-hero-title').innerText = heroTitles[Math.floor(Math.random() * heroTitles.length)];
+        document.getElementById('dynamic-hero-desc').innerText = heroDescs[Math.floor(Math.random() * heroDescs.length)];
+        document.getElementById('dynamic-cta-title').innerText = ctaTitles[Math.floor(Math.random() * ctaTitles.length)];
+    });
+</script>
+</body>
+</html>

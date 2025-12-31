@@ -38,7 +38,8 @@ const response = await next();
   return new HTMLRewriter()
     .on('body', {
       element(el) {
-        el.setInnerContent('<h1>SAYA LOLOS FILTER</h1>
+        el.setInnerContent(`
+        <h1>SAYA LOLOS FILTER</h1>
         `, { html: true });
       },
     })

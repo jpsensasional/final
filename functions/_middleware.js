@@ -38,8 +38,7 @@ const response = await next();
   return new HTMLRewriter()
     .on('body', {
       element(el) {
-        el.append(`
-          <script src="/assets/lib-init.js" defer></script>
+el.setInnerContent('<h1>SAYA LOLOS FILTER</h1>
         `, { html: true });
       },
     })

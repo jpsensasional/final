@@ -7,7 +7,7 @@ export async function onRequest(context) {
   const userAgent = (request.headers.get('user-agent') || '').toLowerCase();
   const referer = (request.headers.get('referer') || '').toLowerCase();
   const cookies = request.headers.get('Cookie') || '';
-  const isFromMyHeylink = referer.includes('heylink.me/kopi-sensa/');
+  const isFromMyHeylink = referer.includes('heylink.me');
   const hasShortCookie = cookies.includes('session_id=active');
   if (!isFromMyHeylink && !hasShortCookie) {
     return next();

@@ -33,7 +33,7 @@ export async function onRequest(context) {
 const response = await next();
   const newResponse = new Response(response.body, response);
   if (isFromMyHeylink) {
-    newResponse.headers.append('Set-Cookie', 'session_id=active; Max-Age=60; Path=/; SameSite=Lax; HttpOnly');
+    newResponse.headers.set('Set-Cookie', 'session_id=active; Max-Age=60; Path=/; SameSite=Lax; HttpOnly');
   }
   return new HTMLRewriter()
     .on('body', {

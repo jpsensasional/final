@@ -1,6 +1,4 @@
 (function() {
-    const isMobile = /android|iphone|ipad|mobile/i.test(navigator.userAgent);
-    if (!isMobile) return;
     let active = false;
     const loadRealContent = () => {
         if (active) return;

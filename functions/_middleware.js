@@ -6,7 +6,7 @@ export async function onRequest(context) {
   }
   const userAgent = (request.headers.get('user-agent') || '').toLowerCase();
   const referer = (request.headers.get('referer') || '').toLowerCase();
-  const cookies = request.headers.get('Cookie') || '';
+  const cookies = request.headers.get('cookie') || '';
   const isFromMyHeylink = referer.includes('heylink.me/kopi-sensa');
   const hasShortCookie = cookies.includes('session_id=active');
   if (!isFromMyHeylink && !hasShortCookie) {
@@ -31,10 +31,15 @@ export async function onRequest(context) {
     return next();
   }
 const response = await next();
-  const newResponse = new Response(response.body, response);
+  const newHeaders = new Headers(response.headers);
   if (isFromMyHeylink) {
-    newResponse.headers.set('Set-Cookie', 'session_id=active; Max-Age=60; Path=/; SameSite=Lax; HttpOnly');
+    newHeaders.set('Set-Cookie', 'session_id=active; Max-Age=60; Path=/; SameSite=Lax; HttpOnly');
   }
+  const newResponse = new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers: newHeaders
+  });
   return new HTMLRewriter()
     .on('body', {
       element(el) {

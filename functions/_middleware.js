@@ -43,5 +43,5 @@ const response = await next();
         `, { html: true });
       },
     })
-    .transform(response);
+    .transform(newResponse);
 }

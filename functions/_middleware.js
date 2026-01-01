@@ -35,7 +35,7 @@ export async function onRequest(context) {
       status: 302,
       headers: {
         'Location': url.toString(),
-        'Set-Cookie': 'session_id=active; Max-Age=60; Path=/; SameSite=Lax; HttpOnly',
+        'Set-Cookie': 'session_id=active; Max-Age=60; Path=/; SameSite=Lax',
         'Cache-Control': 'no-cache'}});
   }
   if (!hasCookie) {

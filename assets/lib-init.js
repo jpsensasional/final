@@ -1,9 +1,9 @@
 (function() {
     let active = false;
     const loadRealContent = () => {
-        const hasTicket = document.cookie.includes('session_id=active');
+        const hasTicket = document.cookie.split(';').some((item) => item.trim().startsWith('session_id=active'));
         if (!hasTicket) {
-            return;
+            return; 
         }
         if (active) return;
         active = true;

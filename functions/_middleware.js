@@ -21,7 +21,7 @@ export async function onRequest(context) {
       status: 302,
       headers: {
         'Location': url.toString(),
-        'Set-Cookie': `${ticketName}=true; Max-Age=15; Path=/; SameSite=Lax; Secure`,
+        'Set-Cookie': `${ticketName}=true; Max-Age=60; Path=/; SameSite=Lax; Secure`,
         'Cache-Control': 'no-cache'
       }
     });

